@@ -9,6 +9,8 @@
 #
 ###########################################
 
+VERSION="3.0"	
+
 function _device_ata()
 {
 	lsscsi | grep 'ATA' > /tmp/ata.txt
@@ -320,7 +322,7 @@ cat << EOF
 	Usage:  ./amcc-ver2.sh [options]
 
         Options:
-                [-v | --version] <script version>       Script version to use
+                [-v | --version]			Script version to use
                 [-mhe | --mhddetx4]			Mount SATA format EXT4
                 [-mhv | --mhddvfat]			Mount SATA format VFAT
                 [-uh | --uhdd]				Unmount SATA
@@ -347,18 +349,53 @@ main()
 
 while [ ! -z "$1" ]
 do	
-	VERSION="3.0"	
 	case "$1" in
                 -h | --help)
 			_usage
 			exit 0
 			;;
-                -v | --version)
-			echo "Version: $VERSION"
+		-mhe | --mhddetx4)
+			_mount_ata_ext4
+			exit 0
+			;;
+		-mhv | --mhddvfat)
+			_mount_ata_vfat
+			exit 0
+			;;
+		-uh | --uhdd)
+			_umount_ata
+			exit 0
+			;;
+		-muv | --musbvfat)
+			_mount_usb
+			exit 0
+			;;
+		-uu | --uusb)
+			_umount_usb
+			exit 0
+			;;
+		-xdd | --xdd)
+			_xdd_ata
+			exit 0
+			;;
+		-ioz | --iozone)
+			_iozone_ata
+			exit 0
+			;;
+		-fio | --fio)
+			_fio_ata
+			exit 0
+			;;
+		-date | --date)
+			_date_t
 			exit 0
 			;;
 		-inf | --info)
 			_inf
+			exit 0
+			;;
+                -v | --version)
+			echo "Version: $VERSION"
 			exit 0
 			;;
                 *)
